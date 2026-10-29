@@ -31,5 +31,3 @@ export type Night = {
  * Rejects only when the file is missing (callers map that to 404).
  */
 export type ReadNight = (runsDir: string, night: string) => Promise<Night>;
-
-export declare function readNight(runsDir: string, night: string): Promise<Night>;
