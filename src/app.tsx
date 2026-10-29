@@ -36,5 +36,17 @@ export function createApp(config: RigConfig = loadConfig()) {
     }
   });
 
+  // Agents read this one. Same rows as the page (ADR 0001): both come from readNight.
+  app.get('/api/digest/:night', async (c) => {
+    const night = c.req.param('night');
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(night)) return c.json({ error: 'not found' }, 404);
+    try {
+      return c.json(await readNight(config.runsDir, night));
+    } catch (err) {
+      if ((err as NodeJS.ErrnoException).code === 'ENOENT') return c.json({ error: 'not found' }, 404);
+      throw err;
+    }
+  });
+
   return app;
 }
