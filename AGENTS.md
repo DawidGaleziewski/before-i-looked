@@ -30,6 +30,29 @@ Read first: `docs/vision.md`, `docs/styleguide.md`. Decisions: `docs/adr/`.
 5. An issue is closed only when its "Done when" holds. If it can't hold yet, leave it open and
    say what it waits on.
 
+## What every issue carries
+
+Split from `plan.md` with the skill `plan-to-issues`, in dependency order, so `Blocked by` cites real numbers. The human reviews the split first. Every issue has the label `plan:<plan name>` (this is how the reviewer sorts them) and this body:
+
+```
+Source: plan.md § <n>
+
+<scope: what to build, the rules from the plan that apply>
+
+**Done when:** <one checkable condition from the plan>
+
+**Blocked by:** #<n>, #<n>  (or "nothing")
+
+**Suggested worker:** <strongest model for logic | cheaper model is fine | coordinator, needs the owner's yes>
+```
+
+- One issue per unit of work. A step that waits on someone else (a review) or needs the owner's yes is its own issue and blocks the clean-up.
+- Close with the comment above. GitHub closes an issue by itself when a commit on the default branch says `closes #n`, so post the comment anyway.
+
+## Previews
+
+A preview is one static HTML file made by a command (`pnpm digest:save` writes `previews/`, which is git-ignored), put on a public HTTPS host you can upload over. Never commit it. Keep the lane marker on it until the reviewer has seen it; then save the page again with `LANE_MARKER` unset, upload it over the same link, and say so on the issue (ADR 0003).
+
 ## Skills
 
 Shared skills live in `.agents/skills/`, one folder each, `SKILL.md` inside. That folder is the
